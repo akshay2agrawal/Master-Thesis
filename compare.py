@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pickle, os
 
 my_path = os.path.dirname(__file__)
-save_path = my_path+'\\experimental results\\cubic\\'
+save_path = my_path+'\\experimental results\\digits\\'
 
 # Getting back the MSE values:
 # Vqpca MSE
@@ -41,13 +41,17 @@ abs_diff_arr = abs_diff.to_numpy()
 binary_abs_diff = np.zeros_like(abs_diff_arr)
 for i in range(0, len(abs_diff_arr)):
     for j in range(0,len(abs_diff_arr)):
-        if abs_diff_arr[i][j] > 0.1:
+        if abs_diff_arr[i][j] > 0.2:
             binary_abs_diff[i][j] = 1 # distances between the reduced cluster
             count_black = count_black+1
         else:
             count = count+1
-print(f'count of < 0.1 is: {count}')
-print(f'count of > 0.1 is: {count_black}')
+print(f'count of < 0.2 is: {count}')
+print(f'count of > 0.2 is: {count_black}')
+sum = count + count_black
+# print the percentage of count and count_black
+print(f'percentage of < 0.2 is: {count/sum}')
+print(f'percentage of > 0.2 is: {count_black/sum}')
 # print(binary_abs_diff)
 #plotting the heatmap for the binary distance matrix
 plt.figure(figsize=(10, 10))
@@ -55,7 +59,7 @@ sns.heatmap(binary_abs_diff, cmap='Greys')
 plt.title('Heatmap of Binary Distance Matrix')
 plt.xlabel('Points')
 plt.ylabel('Points')
-plt.savefig(save_path+'abs_diff_binary_heatmap_0.1.png')
+plt.savefig(save_path+'abs_diff_binary_heatmap_0.2.png')
 plt.clf()
 
 
@@ -71,5 +75,5 @@ print(f'-------------------------------------\n Frobenius norm: {frobenius_norm}
 # plot the heatmap of the difference matrix
 sns.heatmap(abs_diff, cmap='gray_r')
 plt.savefig(f'{save_path}abs_diff_heatmap.png')
-plt.show()
+# plt.show()
 
